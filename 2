@@ -1,0 +1,98 @@
+UIウィジェットのボタンについて学んだ
+``` dart
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(home: MyHomePage()));
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  static var _message = 'ok.';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('App Name'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Text(
+                _message,
+                style: TextStyle(
+                  fontSize: 32.0,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "Roboto",
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(10.0),
+            ),
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: ElevatedButton(
+                onPressed: buttonPressed,
+                child: Text(
+                  "tap me!",
+                  style: TextStyle(
+                    fontSize: 32.0,
+                    color: const Color(0xff000000),
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "Roboto",
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void buttonPressed() {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => SimpleDialog(
+        title: const Text('Select assignment'),
+        children: <Widget>[
+          SimpleDialogOption(
+            onPressed: () => Navigator.pop(context, 'One'),
+            child: const Text('One'),
+          ),
+          SimpleDialogOption(
+            onPressed: () => Navigator.pop(context, 'Two'),
+            child: const Text('Two'),
+          ),
+          SimpleDialogOption(
+            onPressed: () => Navigator.pop(context, 'Three'),
+            child: const Text('Three'),
+          ),
+        ],
+      ),
+    ).then<void>((value) => resultAlert(value));
+  }
+
+  void resultAlert(String? value) {
+    if (value == null) return;
+    setState(() {
+      _message = 'Selected: $value';
+    });
+  }
+}
+
+``` dart
